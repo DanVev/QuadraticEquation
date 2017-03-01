@@ -26,40 +26,52 @@ function ajaxFunction() {
 
 $(document).ready(function () {
     $("input[name = 'insert']").click(function () {
-        var a = parseFloat($('#a').val());
-        var b = parseFloat($('#b').val());
-        var c = parseFloat($('#c').val());
+
+        var a = ($('#a').val());
+        var b = ($('#b').val());
+        var c = ($('#c').val());
         var p = '<div class="button calculate" ">Calculate</div>';
+        if ((a == "") || (b == "") || (c == "") || (parseFloat(a) == 0))
+            alert("incorrect coefficients. Please, try again");
+        else {
+            a = parseFloat(a);
+            b = parseFloat(b);
+            c = parseFloat(c);
+            $('table').append("<tr " + (columns % 2 == 0 ? "class = 'light'" : "") + ">" +
+                "<td class = 'check'>" + "<input type='checkbox' />" + "</td>" +
+                "<td class = 'a'>" + a + "</td>" +
+                "<td class = 'b'>" + b + "</td>" +
+                "<td class = 'c'>" + c + "</td>" +
+                //"<td>" + p + "</td>" +
+                "<td class = 'p'></td>"
+                + "</tr>");
+            columns += 1;
+            /*$(document).on("click", ".calculate", function () {
+                //$(this).fadeOut();
+                var row = $(this).closest("tr")[0].childNodes;
+                // calculate on ajax
+                calculate(row, parseFloat(row[1].innerHTML), parseFloat(row[2].innerHTML), parseFloat(row[3].innerHTML));
 
-        $('table').append("<tr " + (columns % 2 == 0 ? "class = 'light'" : "") + ">" +
-            "<td class = 'check'>" + "<input type='checkbox' />" + "</td>" +
-            "<td class = 'a'>" + a + "</td>" +
-            "<td class = 'b'>" + b + "</td>" +
-            "<td class = 'c'>" + c + "</td>" +
-            "<td>" + p + "</td>" +
-            "<td class = 'p'></td>"
-            + "</tr>");
-        columns += 1;
-        $(document).on("click", ".calculate", function () {
-            //$(this).fadeOut();
-            var row = $(this).closest("tr")[0].childNodes;
-            // calculate on ajax
-            calculate(row, parseFloat(row[1].innerHTML), parseFloat(row[2].innerHTML), parseFloat(row[3].innerHTML));
-
-        });
-        $(document).on("click", '#del', function () {
-            $('.check').each(function () {
-                var $row = $(this)[0];
-                //console.log($row);
-                if ($row.firstChild.checked) {
-                    $(this).closest("tr").remove();
-                    columns -= 1;
-                }
             });
-            console.log("start recolor with columns = " + columns);
-            recolor();
-        });
+            */
+
+            calculate($("table")[0].lastChild.childNodes[1+columns].childNodes, a,b, c);
+
+            $(document).on("click", '#del', function () {
+                $('.check').each(function () {
+                    var $row = $(this)[0];
+                    //console.log($row);
+                    if ($row.firstChild.checked) {
+                        $(this).closest("tr").remove();
+                        columns -= 1;
+                    }
+                });
+                console.log("start recolor with columns = " + columns);
+                recolor();
+            });
+        }
     });
+
     /*    $('#del').click(function () {
      $('tr').each(function (i, e) {
      console.log($(e).childNodes);
@@ -81,10 +93,10 @@ function calculate(row, a, b, c) {
     ajaxFunction();
     ajaxRequest.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            row[5].innerHTML = this.responseText;
+            row[4].innerHTML = this.responseText;
         }
     };
-    ajaxRequest.open("GET", "MyServlet?a=" +a + "&b=" + b + "&c=" + c, true);
+    ajaxRequest.open("GET", "MyServlet?a=" + a + "&b=" + b + "&c=" + c, true);
     ajaxRequest.send();
 }
 
