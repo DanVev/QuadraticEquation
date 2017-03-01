@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="jquery-3.1.1.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Find Square Roots</title>
+    <script type = "text/javascript" src="script.js"></script>
+    <link rel="stylesheet" href="1.css">
+</head>
+<body>
+<form name="input_data">
+    Insert 3 coefficients of equation ax^2 + bx + c = 0:
+    <p><input type="number" id="a"></p>
+    <p><input type="number" id="b"></p>
+    <p><input type="number" id="c"></p>
+    <p><input type="button" name="insert" value="Add to the Table" class="button"></p>
+    <input type="button" value="Reset" onclick="reset()" class="button"/>
+    <br/>
+</form>
+<p></p>
+<div class="button" id="del">Delete</div>
+<p></p>
+<table>
+    <tr class="head">
+        <td>&#10003;</td>
+        <td>A</td>
+        <td>B</td>
+        <td>C</td>
+        <td>Calculations</td>
+        <td>Result</td>
+    </tr>
+</table>
+</body>
+</html>
